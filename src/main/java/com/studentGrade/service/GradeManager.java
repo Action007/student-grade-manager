@@ -1,5 +1,6 @@
 package com.studentGrade.service;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -21,11 +22,12 @@ public class GradeManager {
   }
 
   public void addGrade(String studentId, String course, double score) {
-    if (!students.containsKey(studentId)) {
+    Student student = students.get(studentId);
+
+    if (student == null) {
       throw new StudentNotFoundException("Student not found");
     }
 
-    Student student = students.get(studentId);
     Grade newGrade = new Grade(course, score);
     student.addGrade(newGrade);
   }
@@ -36,6 +38,10 @@ public class GradeManager {
       throw new StudentNotFoundException("Student not found");
     }
     return student;
+  }
+
+  public Collection<Student> getAllStudents() {
+    return students.values();
   }
 
   public double getStudentAverage(String studentId) {
